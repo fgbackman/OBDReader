@@ -1,0 +1,8 @@
+.build/
+.swiftpm/
+*.xcodeproj/
+xcuserdata/
+DerivedData/
+OBD Reader.app/
+*.log
+.DS_Store

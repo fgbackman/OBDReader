@@ -1,0 +1,27 @@
+name: Build
+
+# Compiles the app on GitHub's macOS runners for every push and pull request, so a change that
+# doesn't compile is caught before anyone tries it in a car.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show toolchain
+        run: swift --version
+      - name: Build (release)
+        run: swift build -c release
+      - name: Bundle the .app
+        run: |
+          chmod +x make_app.sh
+          ./make_app.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OBD-Reader-app
+          path: "OBD Reader.app"
+          if-no-files-found: warn
